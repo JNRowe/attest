@@ -80,9 +80,12 @@ class TestResult(object):
 
     def debug(self):
         if self.debugger:
-            import pdb
+            try:
+                from ipdb import post_mortem
+            except ImportError:
+                from pdb import post_mortem
             tb = self.exc_info[2]
-            pdb.post_mortem(tb)
+            post_mortem(tb)
 
     @property
     def test_name(self):
